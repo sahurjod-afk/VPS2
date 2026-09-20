@@ -1,0 +1,59 @@
+## ==================================================================================
+         INCUS, LXD, LXC BOT SUPPORTED BOT V5. MAKE A VPS HOSTING USING THIS BOT
+## ==================================================================================
+
+# Install The Python:
+
+apt update && apt install python3-pip
+
+# Install The Python Packages
+
+pip install discord --break-system-packages
+pip install dotenv --break-system-packages
+pip install PyNaCl --break-system-packages
+pip install davey --break-system-packages
+
+# If your bot doesn't supported lxc or lxd try this:
+
+sudo mkdir -p /etc/apt/keyrings/
+sudo curl -fsSL https://pkgs.zabbly.com/key.asc -o /etc/apt/keyrings/zabbly.asc
+
+# Then:
+
+sudo apt update
+sudo apt install -y incus
+
+## IF YOUR VPS IS SUPPORTED WITH LXD:
+
+snap install lxd
+lxd init
+
+# Make The Bot 24/7:
+
+nano /etc/systemd/system/bot.service
+
+[Unit]
+Description=VPS Discord Bot
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/root
+ExecStart=/usr/bin/python3 /root/bot.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
+
+# Restart The Bot:
+
+systemctl daemon-reload
+systemctl start bot
+systemctl restart bot
+systemctl status bot
+
+## ==================================================================================
+IF YOU GET ANY ERRORS CREATE A TICKET ON OUR DISCORD CHANNEL AND LET ME KNOW. ENJOY!
+## ==================================================================================
